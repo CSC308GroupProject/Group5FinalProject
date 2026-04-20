@@ -9,6 +9,8 @@ import UIKit
 
 class NewGiftViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    var listVC: ViewController?
+    
     @IBOutlet weak var giftTitle: UITextField!
     @IBOutlet weak var giftDescription: UITextView!
     @IBOutlet weak var giftHyperlink: UITextField!
