@@ -18,6 +18,9 @@ class NewGiftViewController: UIViewController, UIImagePickerControllerDelegate, 
     var deleteHidden = true
     
     @IBAction func doneButton(_ sender: Any) {
+        mainVC?.giftArray.append((giftTitle.text ?? "", giftDescription.text ?? "", giftHyperlink.text ?? "", giftImage.image ?? nil as UIImage?))
+            self.navigationController?.popViewController(animated: true)
+        
     }
     
     @IBOutlet weak var deleteButton: UIButton!

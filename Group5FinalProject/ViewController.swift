@@ -31,16 +31,15 @@ class ViewController: UIViewController {
         mainTable.backgroundView = UIImageView(image: UIImage(named: "marble-tile"))
         mainTable.backgroundView?.alpha = 0.5
         
-        
-        giftArray = [gift1, gift2]
-        
-        
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        mainTable.reloadData()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let cell = sender as? UITableViewCell {
-            if let vc = segue.destination as? NewGiftViewController {
-                vc.mainVC = self
+        if let vc = segue.destination as? NewGiftViewController {
+            vc.mainVC = self
+            if let cell = sender as? UITableViewCell {
                 vc.navigationItem.title = "Viewing Gift Entry"
                 vc.deleteHidden = false
                 let section = mainTable.indexPath(for: cell)?.section
