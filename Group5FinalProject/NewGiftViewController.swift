@@ -9,7 +9,7 @@ import UIKit
 
 class NewGiftViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var listVC: ViewController?
+    var mainVC: ViewController?
     
     @IBOutlet weak var giftTitle: UITextField!
     @IBOutlet weak var giftDescription: UITextView!
