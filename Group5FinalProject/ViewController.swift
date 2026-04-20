@@ -33,6 +33,7 @@ class ViewController: UIViewController {
         
     }
     override func viewWillAppear(_ animated: Bool) {
+        print(giftArray)
         mainTable.reloadData()
     }
 
@@ -65,7 +66,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
         return giftArray.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print ("Number of rows: \(giftArray.count)")
         return 4
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -73,13 +73,15 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             return 200
         }
         else {
-            return 44
+            return UITableView.automaticDimension
         }
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
         cell.textLabel?.numberOfLines = 0
+        cell.imageView?.image = nil
+        cell.textLabel?.text = nil
         
         //cell.imageView?.image = giftArray[indexPath.section].3
         switch indexPath.row {
@@ -88,7 +90,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             cell.textLabel?.text = item
         case 1:
             var text = "Description:\n"
-            guard let item = giftArray[indexPath.section].1 else {
+            guard let item = giftArray[indexPath.section].1, item != "" else {
                 text += "none"
                 cell.textLabel?.text = text
                 break
@@ -97,7 +99,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             cell.textLabel?.text = text
         case 2:
             var text = "Hyperlink:\n"
-            guard let item = giftArray[indexPath.section].2 else {
+            guard let item = giftArray[indexPath.section].2, item != "" else {
                 text += "none"
                 cell.textLabel?.text = text
                 break
@@ -105,19 +107,19 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
             text += item
             cell.textLabel?.text = text
         case 3:
-            guard let item = giftArray[indexPath.section].3 else {
-                let text = "no image"
+            guard let image = giftArray[indexPath.section].3 else {
+                let text = "Image:\nnone"
                 cell.textLabel?.text = text
                 break
             }
-            cell.imageView?.image = item
+            print("image set")
+            cell.imageView?.image = image
             cell.imageView?.contentMode = .scaleAspectFit
             cell.imageView?.clipsToBounds = true
         default:
             break
         }
         
-        print ("Cell for row: \(indexPath.section)")
         return cell
     }
     
