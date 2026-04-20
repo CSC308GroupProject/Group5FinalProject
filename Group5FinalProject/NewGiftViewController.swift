@@ -10,6 +10,7 @@ import UIKit
 class NewGiftViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var mainVC: ViewController?
+    var giftIndex: Int?
     
     var titleVar: String?
     var descriptionVar: String?
@@ -18,13 +19,20 @@ class NewGiftViewController: UIViewController, UIImagePickerControllerDelegate, 
     var deleteHidden = true
     
     @IBAction func doneButton(_ sender: Any) {
-        mainVC?.giftArray.append((giftTitle.text ?? "", giftDescription.text, giftHyperlink.text, giftImage.image))
-            self.navigationController?.popViewController(animated: true)
+        if giftIndex != nil {
+            mainVC?.giftArray[giftIndex!] = ((giftTitle.text ?? ""), giftDescription.text, giftHyperlink.text, giftImage.image)
+        }
+        else {
+            mainVC?.giftArray.append((giftTitle.text ?? "", giftDescription.text, giftHyperlink.text, giftImage.image))
+        }
+        self.navigationController?.popViewController(animated: true)
         
     }
     
     @IBOutlet weak var deleteButton: UIButton!
     @IBAction func deleteButton(_ sender: Any) {
+        mainVC?.giftArray.remove(at: giftIndex!)
+        self.navigationController?.popViewController(animated: true)
     }
     
     

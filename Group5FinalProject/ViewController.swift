@@ -43,7 +43,10 @@ class ViewController: UIViewController {
             if let cell = sender as? UITableViewCell {
                 vc.navigationItem.title = "Viewing Gift Entry"
                 vc.deleteHidden = false
+                
                 let section = mainTable.indexPath(for: cell)?.section
+                vc.giftIndex = section
+                
                 vc.titleVar = giftArray[section!].title
                 vc.descriptionVar = giftArray[section!].description
                 vc.hyperlinkVar = giftArray[section!].link
