@@ -38,14 +38,25 @@ class ViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let vc = segue.destination.children.first as? NewGiftViewController {
-            vc.mainVC = self
+        if let cell = sender as? UITableViewCell {
+            if let vc = segue.destination as? NewGiftViewController {
+                vc.mainVC = self
+                vc.navigationItem.title = "Viewing Gift Entry"
+                vc.deleteHidden = false
+                let section = mainTable.indexPath(for: cell)?.section
+                vc.titleVar = giftArray[section!].title
+                vc.descriptionVar = giftArray[section!].description
+                vc.hyperlinkVar = giftArray[section!].link
+                vc.imageVar = giftArray[section!].image
+            }
         }
+        
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let section = indexPath.section
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let section = indexPath.section
+//        print("Section Clicked: \(section)")
+//    }
     
 }
 

@@ -11,6 +11,20 @@ class NewGiftViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     var mainVC: ViewController?
     
+    var titleVar: String?
+    var descriptionVar: String?
+    var hyperlinkVar: String?
+    var imageVar: UIImage?
+    var deleteHidden = true
+    
+    @IBAction func doneButton(_ sender: Any) {
+    }
+    
+    @IBOutlet weak var deleteButton: UIButton!
+    @IBAction func deleteButton(_ sender: Any) {
+    }
+    
+    
     @IBOutlet weak var giftTitle: UITextField!
     @IBOutlet weak var giftDescription: UITextView!
     @IBOutlet weak var giftHyperlink: UITextField!
@@ -29,6 +43,18 @@ class NewGiftViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         dismiss(animated: true)
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        print(mainVC)
+        deleteButton.isHidden = deleteHidden
+        giftTitle.text = titleVar
+        giftDescription.text = descriptionVar
+        giftHyperlink.text = hyperlinkVar
+        giftImage.image = imageVar
+    }
+    
     
 }
 
