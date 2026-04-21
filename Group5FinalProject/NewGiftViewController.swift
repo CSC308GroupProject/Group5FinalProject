@@ -88,7 +88,7 @@ class NewGiftViewController: UIViewController, UIImagePickerControllerDelegate, 
             emitter.birthRate = 0
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             emitter.removeFromSuperlayer()
             completion()
         }
