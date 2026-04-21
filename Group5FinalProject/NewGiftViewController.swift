@@ -31,6 +31,17 @@ class NewGiftViewController: UIViewController, UIImagePickerControllerDelegate, 
          
          */
         
+        guard let title = giftTitle.text, !title.isEmpty else {
+            let alert = UIAlertController(
+                title: "Title Needed",
+                message: "Please enter a gift title before saving.",
+                preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
         // If VC was called using "add" button, add new gift entry.
         if giftIndex != nil {
             mainVC?.giftArray[giftIndex!] = ((giftTitle.text ?? ""), giftDescription.text, giftHyperlink.text, giftImage.image)
@@ -40,7 +51,57 @@ class NewGiftViewController: UIViewController, UIImagePickerControllerDelegate, 
             mainVC?.giftArray.append((giftTitle.text ?? "", giftDescription.text, giftHyperlink.text, giftImage.image))
         }
         // Exit VC to caller VC.
-        self.navigationController?.popViewController(animated: true)
+        showConfettiBurst {
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+    }
+    
+    private func showConfettiBurst(completion: @escaping () -> Void){
+        let emitter = CAEmitterLayer()
+        emitter.emitterPosition = CGPoint(x: view.bounds.midX, y: -10)
+        emitter.emitterShape = .line
+        emitter.emitterSize = CGSize(width: view.bounds.width, height: 1)
+        
+        let colors: [UIColor] = [.red, .orange, .yellow, .green, .blue, .purple, .systemPink]
+        
+        emitter.emitterCells = colors.map { color in
+            let cell = CAEmitterCell()
+            cell.birthRate = 12
+            cell.lifetime = 4.0
+            cell.velocity = CGFloat.random(in: 200...400)
+            cell.velocityRange = 100
+            cell.emissionLongitude = CGFloat.pi
+            cell.emissionRange = CGFloat.pi / 6
+            cell.spin = 4
+            cell.spinRange = 8
+            cell.scale = 0.6
+            cell.scaleRange = 0.3
+            cell.color = color.cgColor
+            cell.contents = makeConfettiImage()
+            return cell
+        }
+        
+        view.layer.addSublayer(emitter)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            emitter.birthRate = 0
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            emitter.removeFromSuperlayer()
+            completion()
+        }
+    }
+    
+    private func makeConfettiImage() -> CGImage? {
+        let size = CGSize(width: 10, height: 6)
+        UIGraphicsBeginImageContextWithOptions(size, false, 0)
+        UIColor.white.setFill()
+        UIBezierPath(roundedRect:CGRect(origin: .zero, size: size), cornerRadius: 2).fill()
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image?.cgImage
         
     }
     
